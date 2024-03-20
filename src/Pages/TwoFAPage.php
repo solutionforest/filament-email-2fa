@@ -8,10 +8,11 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
-use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Enums\Alignment;
 use Illuminate\Contracts\Support\Htmlable;
+use Solutionforest\FilamentEmail2fa\Exceptions\InvalidTwoFACodeException;
+use Solutionforest\FilamentEmail2fa\Responses\LoginSuccessResponse;
 
 /**
  * @property Form $form
@@ -28,6 +29,8 @@ class TwoFactorAuth extends Page implements HasForms
 
     public ?array $data = [];
 
+    public string $email;
+
     public static function getLabel(): string
     {
         return __('filament-email-2fa.2sv');
@@ -37,6 +40,21 @@ class TwoFactorAuth extends Page implements HasForms
     {
         return 'sf-filament-2fa.2fa';
     }
+
+    public function mount(){
+        $this->email = Filament::auth()->user()->email;
+        Filament::auth()->logout();
+        parent::mount();
+    }
+
+    public function resend(){
+
+
+        if($user = $this->getUser()){
+            $user->send2FAEmail();
+        }
+    }
+
 
     public function getFormActions(): array
     {
@@ -56,19 +74,42 @@ class TwoFactorAuth extends Page implements HasForms
 
     public function save()
     {
-        Filament::auth()->user()->update(['two_factor_confirmed_at' => now()]);
 
-        if (Filament::getCurrentPanel()->getId() == 'ngo') {
-            $redirectUrl = route('filament.ngo.home');
-        } else {
-            $redirectUrl = route('filament.jccct.pages.dashboard');
+        $code = $this->data['2fa_code'] ?? null;
+
+        try{
+            if($user = $this->getUser()){
+                $user->verify2FACode($code);
+                $user->twoFaVerifis()->create([
+                    'session_id'=>request()->session()->getId()
+                ]);
+                Filament::auth()->login($user);
+                session()->regenerate();
+
+                return app(LoginSuccessResponse::class);
+            }else{
+                throw new InvalidTwoFACodeException();
+            }
+        }catch(InvalidTwoFACodeException $e){
+            $this->addError('2fa_code',$e->getMessage());
+            return;
         }
-        $this->redirect($redirectUrl);
+
     }
 
     public function getUser()
     {
-        return Filament::auth()->user();
+        $guard = $this->getCurrentGuard();
+        $model = config("auth.providers.{$guard}.model");
+
+        $user = $model::where('email',$this->email)->first();
+        return $user;
+    }
+
+    public function getCurrentGuard()
+    {
+        return Filament::getCurrentPanel()->getAuthGuard();
+
     }
 
     public function form(Form $form): Form
@@ -85,12 +126,8 @@ class TwoFactorAuth extends Page implements HasForms
             'form' => $this->form(
                 $this->makeForm()
                     ->schema([
-                        // $this->getPasswordFormComponent(),
-                        // $this->getPasswordConfirmationFormComponent(),
-                        TextInput::make('2fa_code')->label('2FA Code'),
+                        TextInput::make('2fa_code')->label(__('filament-email-2fa.2fa-code')),
                     ])
-                    ->operation('edit')
-                    ->model($this->getUser())
                     ->statePath('data'),
             ),
         ];
@@ -101,13 +138,6 @@ class TwoFactorAuth extends Page implements HasForms
         return false;
     }
 
-    protected function getSaveFormAction(): Action
-    {
-        return Action::make('save')
-            ->label(__('filament-panels::pages/auth/edit-profile.form.actions.save.label'))
-            ->submit('save')
-            ->keyBindings(['mod+s']);
-    }
 
     public function getFormActionsAlignment(): string | Alignment
     {
@@ -122,23 +152,5 @@ class TwoFactorAuth extends Page implements HasForms
     public function hasLogo(): bool
     {
         return false;
-    }
-
-    protected function getSavedNotification(): ?Notification
-    {
-        $title = $this->getSavedNotificationTitle();
-
-        if (blank($title)) {
-            return null;
-        }
-
-        return Notification::make()
-            ->success()
-            ->title($this->getSavedNotificationTitle());
-    }
-
-    protected function getSavedNotificationTitle(): ?string
-    {
-        return __('filament-panels::resources/pages/edit-record.notifications.saved.title');
     }
 }

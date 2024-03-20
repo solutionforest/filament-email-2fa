@@ -18,12 +18,17 @@ trait HasTwoFALogin
 
     public function twoFaCodes()
     {
-        return $this->morphMany(config('filament-email-2fa.model'), 'user');
+        return $this->morphMany(config('filament-email-2fa.code_model'), 'user');
+    }
+
+    public function twoFaVerifis()
+    {
+        return $this->morphMany(config('filament-email-2fa.verify_model'), 'user');
     }
 
     public function latest_2fa_code()
     {
-        return $this->morphOne(config('filament-email-2fa.model'), 'user') > where('expiry_at', '>=', now())->ofMany('expiry_at', 'max');
+        return $this->morphOne(config('filament-email-2fa.code_model'), 'user') > where('expiry_at', '>=', now())->ofMany('expiry_at', 'max');
     }
 
     public function generate2FACode()
@@ -47,5 +52,12 @@ trait HasTwoFALogin
         }
 
         throw new InvalidTwoFACodeException;
+    }
+
+
+    public function isTwoFaVerfied(string $session_id = null):bool{
+        $session_id = $session_id ?? request()->session()->getId();
+
+        return $this->twoFaVerifis()->where('session_id',$session_id)->exists();
     }
 }

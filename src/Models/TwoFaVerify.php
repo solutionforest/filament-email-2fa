@@ -5,7 +5,7 @@ namespace Solutionforest\FilamentEmail2fa\Models;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Model;
 
-class TwoFaCode extends Model
+class TwoFaVerify extends Model
 {
     use HasTimestamps;
 
@@ -13,7 +13,7 @@ class TwoFaCode extends Model
 
     public function getTable()
     {
-        return config('filament-email-2fa.code_table');
+        return config('filament-email-2fa.verify_model');
     }
 
     public function user()

@@ -9,4 +9,5 @@ return [
     'confirm' => 'Confirm',
     'resend_email' => 'Resend Email',
     'invalid_code' => 'Invalid 2-FA code',
+    '2fa-code'=>'2-FA Code'
 ];
