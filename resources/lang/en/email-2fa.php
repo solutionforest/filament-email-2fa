@@ -2,10 +2,10 @@
 
 // translations for Solutionforest/FilamentEmail2fa
 return [
-    'login_success'=>'Login Success',
-    'email_sent'=>'A email has been sent to :email, please follow the instruction of the email',
-    '2sv'=>'2-Step Verification',
-    'continue'=>'Continue',
-    'confirm'=>'Confirm',
-    'resend_email'=>'Resend Email'
+    'login_success' => 'Login Success',
+    'email_sent' => 'A email has been sent to :email, please follow the instruction of the email',
+    '2sv' => '2-Step Verification',
+    'continue' => 'Continue',
+    'confirm' => 'Confirm',
+    'resend_email' => 'Resend Email',
 ];

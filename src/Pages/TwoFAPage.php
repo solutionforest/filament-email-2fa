@@ -10,12 +10,8 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-
 use Filament\Support\Enums\Alignment;
 use Illuminate\Contracts\Support\Htmlable;
-
-
-use function Filament\Support\is_app_url;
 
 /**
  * @property Form $form
@@ -26,13 +22,11 @@ class TwoFactorAuth extends Page implements HasForms
 
     protected static bool $shouldRegisterNavigation = false;
 
-
     protected static string $layout = 'filament-panels::components.layout.simple';
 
     protected static string $view = 'filament-email-2fa::email-sent';
 
     public ?array $data = [];
-
 
     public static function getLabel(): string
     {
@@ -43,7 +37,6 @@ class TwoFactorAuth extends Page implements HasForms
     {
         return 'sf-filament-2fa.2fa';
     }
-
 
     public function getFormActions(): array
     {
@@ -73,7 +66,6 @@ class TwoFactorAuth extends Page implements HasForms
         $this->redirect($redirectUrl);
     }
 
-
     public function getUser()
     {
         return Filament::auth()->user();
@@ -95,7 +87,7 @@ class TwoFactorAuth extends Page implements HasForms
                     ->schema([
                         // $this->getPasswordFormComponent(),
                         // $this->getPasswordConfirmationFormComponent(),
-                        TextInput::make('2fa_code')->label('2FA Code')
+                        TextInput::make('2fa_code')->label('2FA Code'),
                     ])
                     ->operation('edit')
                     ->model($this->getUser())
@@ -103,8 +95,6 @@ class TwoFactorAuth extends Page implements HasForms
             ),
         ];
     }
-
-
 
     public function hasFullWidthFormActions(): bool
     {
@@ -128,7 +118,6 @@ class TwoFactorAuth extends Page implements HasForms
     {
         return static::getLabel();
     }
-
 
     public function hasLogo(): bool
     {

@@ -2,12 +2,12 @@
 
 namespace Solutionforest\FilamentEmail2fa\Trait;
 
-trait HasTwoFALogin{
-
+trait HasTwoFALogin
+{
     public const enable2FALogin = true;
 
-    public function send2FAEmail(){
+    public function send2FAEmail()
+    {
 
     }
-
 }

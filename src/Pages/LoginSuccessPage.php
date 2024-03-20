@@ -11,16 +11,13 @@ use Illuminate\Contracts\Support\Htmlable;
  */
 class LoginSuccessPage extends Page
 {
-
     protected static bool $shouldRegisterNavigation = false;
-
 
     protected static string $layout = 'filament-panels::components.layout.simple';
 
     protected static string $view = 'filament-email-2fa::login-success';
 
     public ?array $data = [];
-
 
     public static function getLabel(): string
     {
@@ -32,12 +29,10 @@ class LoginSuccessPage extends Page
         return 'sf-filament-2fa.login-success';
     }
 
-
     public function getTitle(): string | Htmlable
     {
         return static::getLabel();
     }
-
 
     public function hasLogo(): bool
     {
