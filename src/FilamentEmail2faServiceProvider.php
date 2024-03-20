@@ -10,11 +10,11 @@ use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
 use Livewire\Features\SupportTesting\Testable;
+use Solutionforest\FilamentEmail2fa\Commands\FilamentEmail2faCommand;
+use Solutionforest\FilamentEmail2fa\Testing\TestsFilamentEmail2fa;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Solutionforest\FilamentEmail2fa\Commands\FilamentEmail2faCommand;
-use Solutionforest\FilamentEmail2fa\Testing\TestsFilamentEmail2fa;
 
 class FilamentEmail2faServiceProvider extends PackageServiceProvider
 {
