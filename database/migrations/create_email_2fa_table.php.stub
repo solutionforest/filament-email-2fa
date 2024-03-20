@@ -8,12 +8,14 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('filament_email_2fa_table', function (Blueprint $table) {
+        $table = config('filament-email-2fa.table');
+
+        Schema::create($table, function (Blueprint $table) {
             $table->id();
-
-            // add fields
-
             $table->timestamps();
+            $table->morphs('user');
+            $table->string('code',12)->index();
+            $table->dateTime('expiry_at');
         });
     }
 };
