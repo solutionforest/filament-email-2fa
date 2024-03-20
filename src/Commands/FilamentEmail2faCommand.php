@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Solutionforest\FilamentEmail2fa\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class FilamentEmail2faCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'filament-email-2fa';
 
     public $description = 'My command';
 

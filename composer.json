@@ -1,29 +1,27 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "solution-forest/filament-email-2fa",
+    "description": "filament-email-2fa",
     "keywords": [
-        ":vendor_name",
+        "solution-forest",
         "laravel",
-        ":package_slug"
+        "filament-email-2fa"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/solution-forest/filament-email-2fa",
     "support": {
-        "issues": "https://github.com/:vendor_slug/:package_slug/issues",
-        "source": "https://github.com/:vendor_slug/:package_slug"
+        "issues": "https://github.com/solution-forest/filament-email-2fa/issues",
+        "source": "https://github.com/solution-forest/filament-email-2fa"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Angie",
+            "email": "info@solutionforest.net",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.1",
         "filament/filament": "^3.0",
-        "filament/forms": "^3.0",
-        "filament/tables": "^3.0",
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
@@ -41,13 +39,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Solutionforest\\FilamentEmail2fa\\": "src/",
+            "Solutionforest\\FilamentEmail2fa\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/"
+            "Solutionforest\\FilamentEmail2fa\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -67,10 +65,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Solutionforest\\FilamentEmail2fa\\FilamentEmail2faServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "FilamentEmail2fa": "Solutionforest\\FilamentEmail2fa\\Facades\\FilamentEmail2fa"
             }
         }
     },
