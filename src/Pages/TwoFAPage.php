@@ -41,20 +41,20 @@ class TwoFactorAuth extends Page implements HasForms
         return 'sf-filament-2fa.2fa';
     }
 
-    public function mount(){
+    public function mount()
+    {
         $this->email = Filament::auth()->user()->email;
         Filament::auth()->logout();
         parent::mount();
     }
 
-    public function resend(){
+    public function resend()
+    {
 
-
-        if($user = $this->getUser()){
+        if ($user = $this->getUser()) {
             $user->send2FAEmail();
         }
     }
-
 
     public function getFormActions(): array
     {
@@ -77,21 +77,22 @@ class TwoFactorAuth extends Page implements HasForms
 
         $code = $this->data['2fa_code'] ?? null;
 
-        try{
-            if($user = $this->getUser()){
+        try {
+            if ($user = $this->getUser()) {
                 $user->verify2FACode($code);
                 $user->twoFaVerifis()->create([
-                    'session_id'=>request()->session()->getId()
+                    'session_id' => request()->session()->getId(),
                 ]);
                 Filament::auth()->login($user);
                 session()->regenerate();
 
                 return app(LoginSuccessResponse::class);
-            }else{
+            } else {
                 throw new InvalidTwoFACodeException();
             }
-        }catch(InvalidTwoFACodeException $e){
-            $this->addError('2fa_code',$e->getMessage());
+        } catch (InvalidTwoFACodeException $e) {
+            $this->addError('2fa_code', $e->getMessage());
+
             return;
         }
 
@@ -102,7 +103,8 @@ class TwoFactorAuth extends Page implements HasForms
         $guard = $this->getCurrentGuard();
         $model = config("auth.providers.{$guard}.model");
 
-        $user = $model::where('email',$this->email)->first();
+        $user = $model::where('email', $this->email)->first();
+
         return $user;
     }
 
@@ -137,7 +139,6 @@ class TwoFactorAuth extends Page implements HasForms
     {
         return false;
     }
-
 
     public function getFormActionsAlignment(): string | Alignment
     {

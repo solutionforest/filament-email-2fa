@@ -54,10 +54,10 @@ trait HasTwoFALogin
         throw new InvalidTwoFACodeException;
     }
 
-
-    public function isTwoFaVerfied(string $session_id = null):bool{
+    public function isTwoFaVerfied(?string $session_id = null): bool
+    {
         $session_id = $session_id ?? request()->session()->getId();
 
-        return $this->twoFaVerifis()->where('session_id',$session_id)->exists();
+        return $this->twoFaVerifis()->where('session_id', $session_id)->exists();
     }
 }

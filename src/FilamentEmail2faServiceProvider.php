@@ -2,6 +2,7 @@
 
 namespace Solutionforest\FilamentEmail2fa;
 
+use Filament\Http\Responses\Auth\Contracts\LoginResponse as LoginResponseContract;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
@@ -11,12 +12,11 @@ use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
 use Livewire\Features\SupportTesting\Testable;
 use Solutionforest\FilamentEmail2fa\Commands\FilamentEmail2faCommand;
+use Solutionforest\FilamentEmail2fa\Responses\TwoFAResponse;
 use Solutionforest\FilamentEmail2fa\Testing\TestsFilamentEmail2fa;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Filament\Http\Responses\Auth\Contracts\LoginResponse as LoginResponseContract;
-use Solutionforest\FilamentEmail2fa\Responses\TwoFAResponse;
 
 class FilamentEmail2faServiceProvider extends PackageServiceProvider
 {
@@ -91,7 +91,6 @@ class FilamentEmail2faServiceProvider extends PackageServiceProvider
 
         // Testing
         Testable::mixin(new TestsFilamentEmail2fa());
-
 
         $this->app->bind(LoginResponseContract::class, TwoFAResponse::class);
 
