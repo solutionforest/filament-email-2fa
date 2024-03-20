@@ -2,15 +2,14 @@
 
 namespace Solutionforest\FilamentEmail2fa\Mail;
 
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 class TwoFAEmail extends Mailable
 {
-    use Queueable, SerializesModels;
-
+    use Queueable;
+    use SerializesModels;
 
     public string $name;
 
@@ -35,6 +34,6 @@ class TwoFAEmail extends Mailable
     public function build()
     {
         return $this->subject($title)
-                ->view('email.blank', ['html' => $content]);
+            ->view('email.blank', ['html' => $content]);
     }
 }

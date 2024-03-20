@@ -2,21 +2,22 @@
 
 namespace Solutionforest\FilamentEmail2fa\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
+use Illuminate\Database\Eloquent\Model;
 
 class TwoFaCode extends Model
 {
     use HasTimestamps;
 
-    protected $guarded = ['id','created_at','updated_at'];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function getTable()
     {
         return config('filament-email-2fa.table');
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->morphTo();
     }
 }
