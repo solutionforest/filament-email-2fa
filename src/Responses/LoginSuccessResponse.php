@@ -4,6 +4,7 @@ namespace Solutionforest\FilamentEmail2fa\Responses;
 
 use Filament\Facades\Filament;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse as LoginResponseContract;
+use Solutionforest\FilamentEmail2fa\Pages\LoginSuccessPage;
 
 class LoginSuccessResponse implements LoginResponseContract
 {
@@ -16,9 +17,8 @@ class LoginSuccessResponse implements LoginResponseContract
     public function toResponse($request)
     {
         // return whatever you want as url
-        $guard = Filament::getCurrentPanel()->getAuthGuard();
-        $url = route("filament.{$guard}.pages.sf-filament-2fa.login-success");
 
-        return redirect()->intended($url);
+
+        return redirect()->intended(route(LoginSuccessPage::getRouteName()));
     }
 }

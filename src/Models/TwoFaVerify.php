@@ -13,7 +13,7 @@ class TwoFaVerify extends Model
 
     public function getTable()
     {
-        return config('filament-email-2fa.verify_model');
+        return config('filament-email-2fa.verify_table');
     }
 
     public function user()

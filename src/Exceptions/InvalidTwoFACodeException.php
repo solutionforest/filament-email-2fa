@@ -10,6 +10,6 @@ class InvalidTwoFACodeException extends Exception
 
     public function __construct($message = null)
     {
-        $this->message = $message ?? __('filament-email-2fa.invalid_code');
+        $this->message = $message ?? __('filament-email-2fa::filament-email-2fa.invalid_code');
     }
 }

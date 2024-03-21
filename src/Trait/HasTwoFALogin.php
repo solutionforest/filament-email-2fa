@@ -29,7 +29,7 @@ trait HasTwoFALogin
 
     public function latest_2fa_code(): Relation
     {
-        return $this->morphOne(config('filament-email-2fa.code_model'), 'user') > where('expiry_at', '>=', now())->ofMany('expiry_at', 'max');
+        return $this->morphOne(config('filament-email-2fa.code_model'), 'user')->where('expiry_at', '>=', now())->ofMany('expiry_at', 'max');
     }
 
     public function generate2FACode(): string

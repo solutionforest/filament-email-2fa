@@ -4,6 +4,7 @@ namespace Solutionforest\FilamentEmail2fa\Responses;
 
 use Filament\Facades\Filament;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse as LoginResponseContract;
+use Solutionforest\FilamentEmail2fa\Pages\TwoFactorAuth;
 
 class TwoFAResponse implements LoginResponseContract
 {
@@ -16,9 +17,9 @@ class TwoFAResponse implements LoginResponseContract
     public function toResponse($request)
     {
         // return whatever you want as url
-        $guard = Filament::getCurrentPanel()->getAuthGuard();
-        $url = route("filament.{$guard}.pages.sf-filament-2fa.2sv");
 
-        return redirect()->intended($url);
+        Filament::auth()->user()->send2FAEmail();
+
+        return redirect()->intended(route(TwoFactorAuth::getRouteName()));
     }
 }

@@ -21,7 +21,7 @@ class LoginSuccessPage extends Page
 
     public static function getLabel(): string
     {
-        return __('filament-email-2fa.login_success');
+        return __('filament-email-2fa::filament-email-2fa.login_success');
     }
 
     public static function getRelativeRouteName(): string

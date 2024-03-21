@@ -6,13 +6,20 @@ use Closure;
 use Filament\Facades\Filament;
 use Illuminate\Http\Request;
 use Solutionforest\FilamentEmail2fa\Interfaces\RequireTwoFALogin;
+use Solutionforest\FilamentEmail2fa\Pages\TwoFactorAuth;
 
 class IsTwoFAVerified
 {
     public function handle(Request $request, Closure $next)
     {
         $user = Filament::auth()->user();
-        if ($user == null) {
+        try{
+            $routeName = $request->route()->getName();
+        }catch(Exception $e){
+            $routeName = null;
+        }
+
+        if ($user == null || $routeName == TwoFactorAuth::getRouteName()) {
             return $next($request);
         }
 
@@ -22,6 +29,6 @@ class IsTwoFAVerified
 
         }
 
-        return abort(404);
+        return redirect(route(TwoFactorAuth::getRouteName()));
     }
 }

@@ -34,7 +34,7 @@ class TwoFactorAuth extends Page implements HasForms
 
     public static function getLabel(): string
     {
-        return __('filament-email-2fa.2sv');
+        return __('filament-email-2fa::filament-email-2fa.2sv');
     }
 
     public static function getRelativeRouteName(): string
@@ -48,14 +48,17 @@ class TwoFactorAuth extends Page implements HasForms
             return redirect(Filament::getUrl());
         }
         $this->email = Filament::auth()->user()->email;
-        Filament::auth()->logout();
     }
 
     public function resend()
     {
 
+
         if ($user = $this->getUser()) {
             $user->send2FAEmail();
+            session()->flash('resent-success', __('filament-email-2fa::filament-email-2fa.resend_success'));
+            return;
+
         }
     }
 
@@ -63,14 +66,14 @@ class TwoFactorAuth extends Page implements HasForms
     {
         return [
             Action::make('save')
-                ->label(__('filament-email-2fa.confirm'))
-                ->submit('save')
+                ->label(__('filament-email-2fa::filament-email-2fa.confirm'))
+                ->action('save')
                 ->keyBindings(['mod+s']),
 
             Action::make('resend')
                 ->color('gray')
-                ->label(__('filament-email-2fa.resend_email'))
-                ->submit('resend')
+                ->label(__('filament-email-2fa::filament-email-2fa.resend_email'))
+                ->action('resend')
                 ->keyBindings(['mod+s']),
         ];
     }
@@ -82,19 +85,17 @@ class TwoFactorAuth extends Page implements HasForms
 
         try {
             if ($user = $this->getUser()) {
-                $user->verify2FACode($code);
+                $user->verify2FACode($code ?? '');
                 $user->twoFaVerifis()->create([
                     'session_id' => request()->session()->getId(),
                 ]);
-                Filament::auth()->login($user);
-                session()->regenerate();
 
                 return app(LoginSuccessResponse::class);
             } else {
                 throw new InvalidTwoFACodeException();
             }
         } catch (InvalidTwoFACodeException $e) {
-            $this->addError('2fa_code', $e->getMessage());
+            $this->addError('data.2fa_code', $e->getMessage());
 
             return;
         }
@@ -131,7 +132,7 @@ class TwoFactorAuth extends Page implements HasForms
             'form' => $this->form(
                 $this->makeForm()
                     ->schema([
-                        TextInput::make('2fa_code')->label(__('filament-email-2fa.2fa-code')),
+                        TextInput::make('2fa_code')->label(__('filament-email-2fa::filament-email-2fa.2fa-code')),
                     ])
                     ->statePath('data'),
             ),
