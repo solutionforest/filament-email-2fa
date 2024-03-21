@@ -34,6 +34,6 @@ class TwoFAEmail extends Mailable
     public function build()
     {
         return $this->subject(__('filament-email-2fa::2sv'))
-            ->view('filament-email-2fa::email-template', ['name' => $this->name,'code'=>$this->code]);
+            ->view('filament-email-2fa::email-template', ['name' => $this->name, 'code' => $this->code]);
     }
 }
