@@ -60,7 +60,6 @@ class FilamentEmail2faServiceProvider extends PackageServiceProvider
             $package->hasViews(static::$viewNamespace);
         }
 
-
     }
 
     public function packageRegistered(): void
@@ -98,7 +97,7 @@ class FilamentEmail2faServiceProvider extends PackageServiceProvider
         $this->app->bind(LoginResponseContract::class, TwoFAResponse::class);
 
         $this->publishes([
-            __DIR__.'/../resources/lang' => lang_path('vendor/filament-email-2fa')
+            __DIR__ . '/../resources/lang' => lang_path('vendor/filament-email-2fa'),
         ], 'filament-email-2fa-translation');
 
     }

@@ -13,9 +13,10 @@ class IsTwoFAVerified
     public function handle(Request $request, Closure $next)
     {
         $user = Filament::auth()->user();
-        try{
+
+        try {
             $routeName = $request->route()->getName();
-        }catch(Exception $e){
+        } catch (Exception $e) {
             $routeName = null;
         }
 

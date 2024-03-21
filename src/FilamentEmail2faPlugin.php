@@ -4,9 +4,9 @@ namespace Solutionforest\FilamentEmail2fa;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
-use Solutionforest\FilamentEmail2fa\Pages\TwoFactorAuth;
-use Solutionforest\FilamentEmail2fa\Pages\LoginSuccessPage;
 use Solutionforest\FilamentEmail2fa\Middlewares\IsTwoFAVerified;
+use Solutionforest\FilamentEmail2fa\Pages\LoginSuccessPage;
+use Solutionforest\FilamentEmail2fa\Pages\TwoFactorAuth;
 
 class FilamentEmail2faPlugin implements Plugin
 {
@@ -21,9 +21,9 @@ class FilamentEmail2faPlugin implements Plugin
             TwoFactorAuth::class,
             LoginSuccessPage::class,
         ])
-        ->authMiddleware([
-            IsTwoFAVerified::class
-        ]);
+            ->authMiddleware([
+                IsTwoFAVerified::class,
+            ]);
 
     }
 

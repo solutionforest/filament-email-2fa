@@ -53,10 +53,10 @@ class TwoFactorAuth extends Page implements HasForms
     public function resend()
     {
 
-
         if ($user = $this->getUser()) {
             $user->send2FAEmail();
             session()->flash('resent-success', __('filament-email-2fa::filament-email-2fa.resend_success'));
+
             return;
 
         }

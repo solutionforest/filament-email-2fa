@@ -2,7 +2,6 @@
 
 namespace Solutionforest\FilamentEmail2fa\Responses;
 
-use Filament\Facades\Filament;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse as LoginResponseContract;
 use Solutionforest\FilamentEmail2fa\Pages\LoginSuccessPage;
 
@@ -17,7 +16,6 @@ class LoginSuccessResponse implements LoginResponseContract
     public function toResponse($request)
     {
         // return whatever you want as url
-
 
         return redirect()->intended(route(LoginSuccessPage::getRouteName()));
     }
