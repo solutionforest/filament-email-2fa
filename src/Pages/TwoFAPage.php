@@ -12,6 +12,7 @@ use Filament\Pages\Page;
 use Filament\Support\Enums\Alignment;
 use Illuminate\Contracts\Support\Htmlable;
 use Solutionforest\FilamentEmail2fa\Exceptions\InvalidTwoFACodeException;
+use Solutionforest\FilamentEmail2fa\Interfaces\RequireTwoFALogin;
 use Solutionforest\FilamentEmail2fa\Responses\LoginSuccessResponse;
 
 /**
@@ -43,9 +44,11 @@ class TwoFactorAuth extends Page implements HasForms
 
     public function mount()
     {
+        if(!Filament::auth()->user() instanceof RequireTwoFALogin){
+            return redirect(Filament::getUrl());
+        }
         $this->email = Filament::auth()->user()->email;
         Filament::auth()->logout();
-        parent::mount();
     }
 
     public function resend()

@@ -9,7 +9,7 @@ use Solutionforest\FilamentEmail2fa\Interfaces\RequireTwoFALogin;
 
 class IsTwoFAVerified
 {
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
         $user = Filament::auth()->user();
         if ($user == null) {
@@ -22,6 +22,6 @@ class IsTwoFAVerified
 
         }
 
-        abort(404);
+        return abort(404);
     }
 }
