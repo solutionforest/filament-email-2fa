@@ -108,8 +108,8 @@ class FilamentEmail2faServiceProvider extends PackageServiceProvider
     {
         return [
             // AlpineComponent::make('filament-email-2fa', __DIR__ . '/../resources/dist/components/filament-email-2fa.js'),
-            Css::make('filament-email-2fa-styles', __DIR__ . '/../resources/dist/filament-email-2fa.css'),
-            Js::make('filament-email-2fa-scripts', __DIR__ . '/../resources/dist/filament-email-2fa.js'),
+            // Css::make('filament-email-2fa-styles', __DIR__ . '/../resources/dist/filament-email-2fa.css'),
+            // Js::make('filament-email-2fa-scripts', __DIR__ . '/../resources/dist/filament-email-2fa.js'),
         ];
     }
 
