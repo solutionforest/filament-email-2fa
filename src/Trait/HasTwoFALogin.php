@@ -2,6 +2,7 @@
 
 namespace Solutionforest\FilamentEmail2fa\Trait;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Mail;
 use Solutionforest\FilamentEmail2fa\Exceptions\InvalidTwoFACodeException;
 use Solutionforest\FilamentEmail2fa\Mail\TwoFAEmail;
@@ -16,22 +17,22 @@ trait HasTwoFALogin
             ->send(new TwoFAEmail($this->name, $this->generate2FACode()));
     }
 
-    public function twoFaCodes()
+    public function twoFaCodes() : Relation
     {
         return $this->morphMany(config('filament-email-2fa.code_model'), 'user');
     }
 
-    public function twoFaVerifis()
+    public function twoFaVerifis() : Relation
     {
         return $this->morphMany(config('filament-email-2fa.verify_model'), 'user');
     }
 
-    public function latest_2fa_code()
+    public function latest_2fa_code() : Relation
     {
         return $this->morphOne(config('filament-email-2fa.code_model'), 'user') > where('expiry_at', '>=', now())->ofMany('expiry_at', 'max');
     }
 
-    public function generate2FACode()
+    public function generate2FACode() : string
     {
         $this->twoFaCodes()->delete();
         $code = sprintf('%06d', mt_rand(1, 999999));

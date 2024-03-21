@@ -5,6 +5,7 @@ namespace Solutionforest\FilamentEmail2fa\Middlewares;
 use Closure;
 use Filament\Facades\Filament;
 use Illuminate\Http\Request;
+use Solutionforest\FilamentEmail2fa\Interfaces\RequireTwoFALogin;
 
 class IsTwoFAVerified
 {
@@ -15,12 +16,12 @@ class IsTwoFAVerified
             return $next($request);
         }
 
-        if ($user->isTwoFaVerfied($request->session()->getId())) {
+        if ($user instanceof RequireTwoFALogin && $user->isTwoFaVerfied($request->session()->getId())) {
 
             return $next($request);
 
         }
 
-        return abort(404);
+        abort(404);
     }
 }
