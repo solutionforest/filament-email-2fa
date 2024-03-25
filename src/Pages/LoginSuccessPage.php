@@ -13,7 +13,7 @@ class LoginSuccessPage extends Page
 {
     protected static bool $shouldRegisterNavigation = false;
 
-    protected static string $layout = 'filament-panels::components.layout.simple';
+    protected static string $layout = 'filament-email-2fa.simple-layout';
 
     protected static string $view = 'filament-email-2fa::login-success';
 

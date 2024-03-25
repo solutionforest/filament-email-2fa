@@ -20,7 +20,7 @@ class IsTwoFAVerified
             $routeName = null;
         }
 
-        if ($user == null || $routeName == TwoFactorAuth::getRouteName()) {
+        if ($user == null || $routeName == TwoFactorAuth::getRouteName() || $routeName == Filament::getCurrentPanel()->generateRouteName('auth.logout')) {
             return $next($request);
         }
 
