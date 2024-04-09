@@ -11,4 +11,5 @@ return [
     'invalid_code' => 'Invalid 2-FA code',
     '2fa-code' => '2-FA Code',
     'resend_success' => 'Resend Success',
+    'use_another_ac'=>'User Another Account',
 ];

@@ -62,6 +62,12 @@ class TwoFactorAuth extends Page implements HasForms
         }
     }
 
+    public function logout(){
+        Filament::auth()->logout();
+        session()->regenerate();
+        return redirect(Filament::auth()->getLoginUrl());
+    }
+
     public function getFormActions(): array
     {
         return [
@@ -75,6 +81,11 @@ class TwoFactorAuth extends Page implements HasForms
                 ->label(__('filament-email-2fa::filament-email-2fa.resend_email'))
                 ->action('resend')
                 ->keyBindings(['mod+s']),
+
+            Action::make('logout')
+                ->color('gray')
+                ->label(__('filament-email-2fa::filament-email-2fa.use_another_ac'))
+                ->action('logout')
         ];
     }
 
