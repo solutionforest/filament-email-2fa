@@ -65,7 +65,7 @@ class TwoFactorAuth extends Page implements HasForms
     public function logout(){
         Filament::auth()->logout();
         session()->regenerate();
-        return redirect(Filament::auth()->getLoginUrl());
+        return redirect(Filament::getLoginUrl());
     }
 
     public function getFormActions(): array
