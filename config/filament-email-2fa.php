@@ -10,4 +10,8 @@ return [
 
     'expiry_time_by_mins' => 10,
 
+    '2fa_page'=>\Solutionforest\FilamentEmail2fa\Pages\TwoFactorAuth::class,
+    'login_success_page'=>\Solutionforest\FilamentEmail2fa\Pages\LoginSuccessPage::class,
+
+
 ];
