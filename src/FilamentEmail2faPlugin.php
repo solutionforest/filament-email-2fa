@@ -18,7 +18,7 @@ class FilamentEmail2faPlugin implements Plugin
     public function register(Panel $panel): void
     {
         $fapage = config('filament-email-2fa.2fa_page', TwoFactorAuth::class);
-        $login_success_page = config('filament-email-2fa.2fa_page', LoginSuccessPage::class);
+        $login_success_page = config('filament-email-2fa.login_success_page', LoginSuccessPage::class);
 
         $panel->pages([
             $fapage,
