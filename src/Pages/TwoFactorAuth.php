@@ -44,7 +44,7 @@ class TwoFactorAuth extends Page implements HasForms
 
     public function mount()
     {
-        if (! Filament::auth()->user() instanceof RequireTwoFALogin) {
+        if (!Filament::auth()->user() instanceof RequireTwoFALogin) {
             return redirect(Filament::getUrl());
         }
         $this->email = Filament::auth()->user()->email;
@@ -58,16 +58,21 @@ class TwoFactorAuth extends Page implements HasForms
             session()->flash('resent-success', __('filament-email-2fa::filament-email-2fa.resend_success'));
 
             return;
-
         }
     }
 
     public function logout()
     {
         Filament::auth()->logout();
-        session()->regenerate();
 
-        return redirect(Filament::getLoginUrl());
+        session()->invalidate();
+        session()->regenerateToken();
+
+        return redirect()->to(
+
+            Filament::hasLogin() ? Filament::getLoginUrl() : Filament::getUrl(),
+
+        );
     }
 
     public function getFormActions(): array
@@ -112,7 +117,6 @@ class TwoFactorAuth extends Page implements HasForms
 
             return;
         }
-
     }
 
     public function getUser()
@@ -128,7 +132,6 @@ class TwoFactorAuth extends Page implements HasForms
     public function getCurrentGuard()
     {
         return Filament::getCurrentPanel()->getAuthGuard();
-
     }
 
     public function form(Form $form): Form
