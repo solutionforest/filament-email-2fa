@@ -44,7 +44,7 @@ class TwoFactorAuth extends Page implements HasForms
 
     public function mount()
     {
-        if (!Filament::auth()->user() instanceof RequireTwoFALogin) {
+        if (! Filament::auth()->user() instanceof RequireTwoFALogin) {
             return redirect(Filament::getUrl());
         }
         $this->email = Filament::auth()->user()->email;
@@ -69,9 +69,7 @@ class TwoFactorAuth extends Page implements HasForms
         session()->regenerateToken();
 
         return redirect()->to(
-
             Filament::hasLogin() ? Filament::getLoginUrl() : Filament::getUrl(),
-
         );
     }
 
