@@ -40,39 +40,39 @@ This is the contents of the published config file:
 
 ```php
 return [
+    'code_table' => 'filament_email_2fa_codes',
+    'verify_table' => 'filament_email_2fa_verify',
+
+    'code_model' => \Solutionforest\FilamentEmail2fa\Models\TwoFaCode::class,
+    'verify_model' => \Solutionforest\FilamentEmail2fa\Models\TwoFaVerify::class,
+
+    'expiry_time_by_mins' => 10,
+
+    '2fa_page' => \Solutionforest\FilamentEmail2fa\Pages\TwoFactorAuth::class,
+    'login_success_page' => \Solutionforest\FilamentEmail2fa\Pages\LoginSuccessPage::class,
 ];
 ```
 
-## Usage
+## Adding the plugin to a panel
 
 ```php
-$filamentEmail2fa = new Solutionforest\FilamentEmail2fa();
-echo $filamentEmail2fa->echoPhrase('Hello, Solutionforest!');
+use Solutionforest\FilamentEmail2fa\FilamentEmail2faPlugin;
+
+return $panel
+        // ...
+        ->plugin(FilamentEmail2faPlugin::make());
 ```
 
-## Testing
+## Preparing your filament user class
 
-```bash
-composer test
+Implement the 'RequireTwoFALogin' interface and use the 'HasTwoFALogin' trait
+
+```php
+use Solutionforest\FilamentEmail2fa\Interfaces\RequireTwoFALogin;
+use Solutionforest\FilamentEmail2fa\Trait\HasTwoFALogin;
+
+class FilamentUser extends Authenticatable implements FilamentUserContract,RequireTwoFALogin{
+    use HasTwoFALogin;
+}
 ```
 
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## Credits
-
-- [Angie](https://github.com/solution-forest)
-- [All Contributors](../../contributors)
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
