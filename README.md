@@ -6,8 +6,30 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/solution-forest/filament-email-2fa.svg?style=flat-square)](https://packagist.org/packages/solution-forest/filament-email-2fa)
 
 
+## Secure Your Filament Applications with Email-Based 2FA
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+This package seamlessly integrates two-factor authentication (2FA) into your Filament PHP applications using email verification codes. Enhance the security of your user accounts and protect sensitive data.
+
+### Key Features:
+
+- Easy Integration: Quickly add 2FA to your Filament projects with minimal configuration.
+- Email Verification: Users receive time-sensitive codes via email for secure login.
+- Customizable: Tailor the 2FA experience with configurable options (e.g., code expiry time).
+- Seamless User Experience: Provides a user-friendly interface for setting up and using 2FA.
+
+
+### How it Works:
+
+- Upon successful login, users are prompted to enter a verification code sent to their email address.
+- The package handles code generation, email delivery, and verification logic.
+- Once verified, users gain access to the protected Filament panel.
+
+### Ideal For:
+
+Filament applications handling sensitive user data.
+Projects requiring an extra layer of account security.
+Developers seeking a straightforward 2FA solution.
+
 
 ## Installation
 
