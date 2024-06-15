@@ -10,6 +10,9 @@
 
 This package seamlessly integrates two-factor authentication (2FA) into your Filament PHP applications using email verification codes. Enhance the security of your user accounts and protect sensitive data.
 
+![image](https://github.com/solutionforest/filament-email-2fa/assets/68211972/8fcefe16-c280-41f0-bc26-652f285b8975)
+
+
 ### Key Features:
 
 - Easy Integration: Quickly add 2FA to your Filament projects with minimal configuration.
