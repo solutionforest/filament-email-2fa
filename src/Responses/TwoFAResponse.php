@@ -18,11 +18,11 @@ class TwoFAResponse implements LoginResponseContract
     {
         // return whatever you want as url
 
-        if (Filament::getCurrentPanel()->hasPlugin('filament-email-2fa')){
+        if (Filament::getCurrentPanel()->hasPlugin('filament-email-2fa')) {
             Filament::auth()->user()->send2FAEmail();
+
             return redirect()->intended(route(TwoFactorAuth::getRouteName()));
         }
-
 
         return redirect()->intended(Filament::getUrl());
 
