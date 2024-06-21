@@ -62,9 +62,7 @@ class FilamentEmail2faServiceProvider extends PackageServiceProvider
 
     }
 
-    public function packageRegistered(): void
-    {
-    }
+    public function packageRegistered(): void {}
 
     public function packageBooted(): void
     {
