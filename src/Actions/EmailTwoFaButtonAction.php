@@ -3,17 +3,18 @@
 namespace Solutionforest\FilamentEmail2fa\Actions;
 
 use Filament\Actions\Action;
-use Filament\Forms\Components\TextInput;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Solutionforest\FilamentEmail2fa\Exceptions\InvalidTwoFACodeException;
 use Filament\Notifications\Notification;
+use Solutionforest\FilamentEmail2fa\Exceptions\InvalidTwoFACodeException;
 
 class EmailTwoFaButtonAction extends Action
 {
     protected function isPasswordSessionValid(): bool
     {
         $passwordTimeout = config('auth.password_timeout', 3600);
+
         return session()->has('auth.password_confirmed_at') &&
             (time() - session('auth.password_confirmed_at', 0)) < $passwordTimeout;
     }
@@ -24,13 +25,13 @@ class EmailTwoFaButtonAction extends Action
         $provider = config("auth.guards.{$guard}.provider");
         $model = config("auth.providers.{$provider}.model");
 
-        if (!class_exists($model)) {
+        if (! class_exists($model)) {
             throw new \RuntimeException("User model {$model} does not exist.");
         }
 
         $user = $model::where('email', Filament::auth()->user()->email)->first();
 
-        if (!$user) {
+        if (! $user) {
             throw new \RuntimeException(__('filament-email-2fa::filament-email-2fa.email_user_not_found'));
         }
 
@@ -66,7 +67,7 @@ class EmailTwoFaButtonAction extends Action
                     $form->fill();
 
                     try {
-                        $this->getUser();
+                        $user = $this->getUser();
                     } catch (\RuntimeException $e) {
                         Notification::make()
                             ->title($e->getMessage())
@@ -76,7 +77,7 @@ class EmailTwoFaButtonAction extends Action
                     }
 
                     // Send the 2FA email
-                    // $user->send2FAEmail();
+                    $user->send2FAEmail();
                 });
         }
     }

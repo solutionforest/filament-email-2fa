@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Solutionforest\FilamentEmail2fa\Exceptions\InvalidTwoFACodeException;
-use Solutionforest\FilamentEmail2fa\Mail\TwoFAEmail;
 
 trait HasTwoFALogin
 {

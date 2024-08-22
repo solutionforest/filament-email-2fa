@@ -5,14 +5,16 @@ namespace Solutionforest\FilamentEmail2fa\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\SerializesModels;
 
 class TwoFAEmail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public string $name;
+
     public string $code;
 
     /**
@@ -25,6 +27,7 @@ class TwoFAEmail extends Mailable
         $this->name = $name;
         $this->code = $code;
     }
+
     /**
      * Get the message envelope.
      */
