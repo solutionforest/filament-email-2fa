@@ -9,9 +9,8 @@ return new class extends Migration
     public function up()
     {
         $code_table = config('filament-email-2fa.code_table');
-        $morphName = config('filament-email-2fa.morph_name', 'user');
 
-        Schema::create($code_table, function (Blueprint $table) use ($morphName) {
+        Schema::create($code_table, function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->morphs('user');
@@ -21,10 +20,10 @@ return new class extends Migration
 
         $verify_table = config('filament-email-2fa.verify_table');
 
-        Schema::create($verify_table, function (Blueprint $table) use ($morphName) {
+        Schema::create($verify_table, function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->morphs($morphName);
+            $table->morphs('user');
             $table->string('session_id')->index();
         });
     }

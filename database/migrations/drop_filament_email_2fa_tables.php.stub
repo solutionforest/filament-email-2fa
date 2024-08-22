@@ -1,0 +1,22 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        // This migration is for rolling back, so it's empty.
+    }
+
+    public function down()
+    {
+        $code_table = config('filament-email-2fa.code_table');
+        $verify_table = config('filament-email-2fa.verify_table');
+
+        Schema::dropIfExists($code_table);
+        Schema::dropIfExists($verify_table);
+    }
+};
