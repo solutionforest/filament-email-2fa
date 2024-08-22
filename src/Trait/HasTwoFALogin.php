@@ -20,20 +20,17 @@ trait HasTwoFALogin
 
     public function twoFaCodes(): Relation
     {
-        $morphName = config('filament-email-2fa.morph_name', 'user');
-        return $this->morphMany(config('filament-email-2fa.code_model'), $morphName);
+        return $this->morphMany(config('filament-email-2fa.code_model'), 'user');
     }
 
     public function twoFaVerifications(): Relation
     {
-        $morphName = config('filament-email-2fa.morph_name', 'user');
-        return $this->morphMany(config('filament-email-2fa.verify_model'), $morphName);
+        return $this->morphMany(config('filament-email-2fa.verify_model'), 'user');
     }
 
     public function latest2faCode(): Relation
     {
-        $morphName = config('filament-email-2fa.morph_name', 'user');
-        return $this->morphOne(config('filament-email-2fa.code_model'), $morphName)
+        return $this->morphOne(config('filament-email-2fa.code_model'), 'user')
             ->where('expiry_at', '>=', now())
             ->ofMany('expiry_at', 'max');
     }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create($code_table, function (Blueprint $table) use ($morphName) {
             $table->id();
             $table->timestamps();
-            $table->morphs($morphName);
+            $table->morphs('user');
             $table->string('code', 12)->index();
             $table->dateTime('expiry_at');
         });
