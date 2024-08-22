@@ -134,6 +134,18 @@ return [
     |
     */
     'login_success_page' => \Solutionforest\FilamentEmail2fa\Pages\LoginSuccessPage::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | 2FA Email Class
+    |--------------------------------------------------------------------------
+    |
+    | Specify the custom email class used for sending 2FA emails.
+    | This class should extend \Illuminate\Mail\Mailable and define
+    | the email content and format.
+    |
+    */
+    'email_class' => \Solutionforest\FilamentEmail2fa\Mail\TwoFAEmail::class,
 ];
 ```
 
@@ -160,7 +172,7 @@ class FilamentUser extends Authenticatable implements FilamentUserContract,Requi
 }
 ```
 
-### Using the EmailTwoFaButtonAction
+## Using the EmailTwoFaButtonAction
 
 To add the `EmailTwoFaButtonAction` to a Filament form, follow these steps:
 
@@ -180,3 +192,74 @@ To add the `EmailTwoFaButtonAction` to a Filament form, follow these steps:
 3. **Handle 2FA Code Verification:**
 
    The action will prompt the user to enter the 2FA code sent to their email. It will handle code validation and notify the user of success or failure.
+
+## Customizing the 2FA Email Class
+
+You can use a custom email class when sending the 2FA email. By default, the `Solutionforest\FilamentEmail2fa\Mail\TwoFAEmail` class is used, but you can specify a different class if needed.
+
+### Example of Using a Custom Email Class
+
+You can specify a custom email class for sending 2FA emails by configuring the plugin. 
+
+### Define a Custom Email Class
+
+Create a custom email class extending `Mailable`:
+
+```php
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class CustomTwoFAEmail extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public string $name;
+    public string $code;
+
+    /**
+     * Create a new message instance.
+     *
+     * @param string $name
+     * @param string $code
+     */
+    public function __construct(string $name, string $code)
+    {
+        $this->name = $name;
+        $this->code = $code;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->subject('Your Custom 2FA Code')
+                    ->markdown('emails.custom_twofa', ['name' => $this->name, 'code' => $this->code]);
+    }
+}
+```
+
+In the `resources/views/emails/custom_twofa.blade.php` file:
+
+Update the plugin’s configuration file (`config/filament-email-2fa.php`) to use your custom email class:
+
+```php
+/*
+|--------------------------------------------------------------------------
+| Custom 2FA Email Class
+|--------------------------------------------------------------------------
+|
+| Specify the custom email class used for sending 2FA emails.
+| This class should extend \Illuminate\Mail\Mailable and define
+| the email content and format.
+|
+*/
+'email_class' => \App\Mail\CustomTwoFAEmail::class,
+```

@@ -1,6 +1,6 @@
 <?php
 
-namespace Solutionforest\FilamentEmail2fa\Trait;
+namespace Solutionforest\FilamentEmail2fa\Traits;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Crypt;
@@ -14,8 +14,10 @@ trait HasTwoFALogin
 
     public function send2FAEmail()
     {
+        $emailClass = (string) config('filament-email-2fa.custom_email_class');
+
         Mail::to(trim($this->email))
-            ->send(new TwoFAEmail($this->name, $this->generate2FACode()));
+            ->send(new $emailClass($this->name, $this->generate2FACode()));
     }
 
     public function twoFaCodes(): Relation
@@ -40,7 +42,6 @@ trait HasTwoFALogin
         $this->twoFaCodes()->delete();
 
         $code = sprintf('%06d', mt_rand(1, 999999));
-
         $encryptedCode = Crypt::encryptString($code);
 
         $this->twoFaCodes()->create([
@@ -63,7 +64,7 @@ trait HasTwoFALogin
                     return;
                 }
             } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                // Handle decryption failure (e.g., if the code has been tampered with)
+                // Handle decryption failure
             }
         }
 

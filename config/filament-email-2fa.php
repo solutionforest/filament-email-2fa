@@ -72,4 +72,15 @@ return [
     */
     'login_success_page' => \Solutionforest\FilamentEmail2fa\Pages\LoginSuccessPage::class,
 
+    /*
+    |--------------------------------------------------------------------------
+    | 2FA Email Class
+    |--------------------------------------------------------------------------
+    |
+    | Specify the custom email class used for sending 2FA emails.
+    | This class should extend \Illuminate\Mail\Mailable and define
+    | the email content and format.
+    |
+    */
+    'email_class' => \Solutionforest\FilamentEmail2fa\Mail\TwoFAEmail::class,
 ];
