@@ -1,11 +1,12 @@
 <?php
 
-namespace Solutionforest\FilamentEmail2fa\Trait;
+namespace Solutionforest\FilamentEmail2fa\Traits;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Solutionforest\FilamentEmail2fa\Exceptions\InvalidTwoFACodeException;
+use Solutionforest\FilamentEmail2fa\Mail\TwoFAEmail;
 
 trait HasTwoFALogin
 {
@@ -13,7 +14,7 @@ trait HasTwoFALogin
 
     public function send2FAEmail()
     {
-        $emailClass = (string) config('filament-email-2fa.custom_email_class');
+        $emailClass = (string) config('filament-email-2fa.custom_email_class', TwoFAEmail::class);
 
         Mail::to(trim($this->email))
             ->send(new $emailClass($this->name, $this->generate2FACode()));
