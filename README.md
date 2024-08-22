@@ -19,7 +19,7 @@ This package seamlessly integrates two-factor authentication (2FA) into your Fil
 - Email Verification: Users receive time-sensitive codes via email for secure login.
 - Customizable: Tailor the 2FA experience with configurable options (e.g., code expiry time).
 - Seamless User Experience: Provides a user-friendly interface for setting up and using 2FA.
-
+- Email Two-Factor Authentication Button: Utilize the `EmailTwoFaButtonAction` to add a button for email-based 2FA in your Filament forms.
 
 ### How it Works:
 
@@ -160,3 +160,23 @@ class FilamentUser extends Authenticatable implements FilamentUserContract,Requi
 }
 ```
 
+### Using the EmailTwoFaButtonAction
+
+To add the `EmailTwoFaButtonAction` to a Filament form, follow these steps:
+
+1. **Add the Action to Your Form:**
+
+   ```php
+   use Solutionforest\FilamentEmail2fa\Actions\EmailTwoFaButtonAction;
+
+   // In your Filament form setup
+   $form->actions([
+       EmailTwoFaButtonAction::make()
+           ->label(__('Send 2FA Code'))
+           ->color('primary'),
+   ]);
+   ```
+
+3. **Handle 2FA Code Verification:**
+
+   The action will prompt the user to enter the 2FA code sent to their email. It will handle code validation and notify the user of success or failure.
