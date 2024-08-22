@@ -8,13 +8,13 @@ interface RequireTwoFALogin
 {
     public function twoFaCodes(): Relation;
 
-    public function twoFaVerifis(): Relation;
+    public function twoFaVerifications(): Relation;
 
-    public function latest_2fa_code(): Relation;
+    public function latest2faCode(): Relation;
 
     public function generate2FACode(): string;
 
     public function verify2FACode(string $code);
 
-    public function isTwoFaVerfied(?string $session_id = null): bool;
+    public function isTwoFaVerified(?string $session_id = null): bool;
 }

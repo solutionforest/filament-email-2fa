@@ -18,6 +18,7 @@ class TwoFaCode extends Model
 
     public function user()
     {
-        return $this->morphTo();
+        $morphName = config('filament-email-2fa.morph_name', 'user');
+        return $this->morphTo($morphName);
     }
 }

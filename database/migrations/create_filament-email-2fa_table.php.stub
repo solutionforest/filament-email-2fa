@@ -9,24 +9,22 @@ return new class extends Migration
     public function up()
     {
         $code_table = config('filament-email-2fa.code_table');
+        $morphName = config('filament-email-2fa.morph_name', 'user');
 
-        Schema::create($code_table, function (Blueprint $table) {
+        Schema::create($code_table, function (Blueprint $table) use ($morphName) {
             $table->id();
             $table->timestamps();
-            $table->morphs('user');
-            $table->string('code',12)->index();
+            $table->morphs($morphName);
+            $table->string('code', 12)->index();
             $table->dateTime('expiry_at');
         });
 
-
-
-
         $verify_table = config('filament-email-2fa.verify_table');
 
-        Schema::create($verify_table, function (Blueprint $table) {
+        Schema::create($verify_table, function (Blueprint $table) use ($morphName) {
             $table->id();
             $table->timestamps();
-            $table->morphs('user');
+            $table->morphs($morphName);
             $table->string('session_id')->index();
         });
     }

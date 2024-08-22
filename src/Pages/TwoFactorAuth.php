@@ -102,7 +102,8 @@ class TwoFactorAuth extends Page implements HasForms
         try {
             if ($user = $this->getUser()) {
                 $user->verify2FACode($code ?? '');
-                $user->twoFaVerifis()->create([
+
+                $user->twoFaVerifications()->create([
                     'session_id' => request()->session()->getId(),
                 ]);
 
@@ -120,7 +121,9 @@ class TwoFactorAuth extends Page implements HasForms
     public function getUser()
     {
         $guard = $this->getCurrentGuard();
-        $model = config("auth.providers.{$guard}.model");
+
+        $provider = config("auth.guards.{$guard}.provider");
+        $model = config("auth.providers.{$provider}.model");
 
         $user = $model::where('email', $this->email)->first();
 

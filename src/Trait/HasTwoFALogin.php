@@ -3,6 +3,7 @@
 namespace Solutionforest\FilamentEmail2fa\Trait;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Solutionforest\FilamentEmail2fa\Exceptions\InvalidTwoFACodeException;
 use Solutionforest\FilamentEmail2fa\Mail\TwoFAEmail;
@@ -19,46 +20,63 @@ trait HasTwoFALogin
 
     public function twoFaCodes(): Relation
     {
-        return $this->morphMany(config('filament-email-2fa.code_model'), 'user');
+        $morphName = config('filament-email-2fa.morph_name', 'user');
+        return $this->morphMany(config('filament-email-2fa.code_model'), $morphName);
     }
 
-    public function twoFaVerifis(): Relation
+    public function twoFaVerifications(): Relation
     {
-        return $this->morphMany(config('filament-email-2fa.verify_model'), 'user');
+        $morphName = config('filament-email-2fa.morph_name', 'user');
+        return $this->morphMany(config('filament-email-2fa.verify_model'), $morphName);
     }
 
-    public function latest_2fa_code(): Relation
+    public function latest2faCode(): Relation
     {
-        return $this->morphOne(config('filament-email-2fa.code_model'), 'user')->where('expiry_at', '>=', now())->ofMany('expiry_at', 'max');
+        $morphName = config('filament-email-2fa.morph_name', 'user');
+        return $this->morphOne(config('filament-email-2fa.code_model'), $morphName)
+            ->where('expiry_at', '>=', now())
+            ->ofMany('expiry_at', 'max');
     }
 
     public function generate2FACode(): string
     {
         $this->twoFaCodes()->delete();
+
         $code = sprintf('%06d', mt_rand(1, 999999));
+
+        $encryptedCode = Crypt::encryptString($code);
+
         $this->twoFaCodes()->create([
-            'code' => $code,
+            'code' => $encryptedCode,
             'expiry_at' => now()->addMinutes((int) config('filament-email-2fa.expiry_time_by_mins', 10)),
         ]);
 
         return $code;
-
     }
 
     public function verify2FACode(string $code)
     {
-        $latestCode = $this->latest_2fa_code?->code;
-        if ($code !== null && $code === $latestCode) {
-            return;
+        $encryptedCode = $this->latest2faCode?->code;
+
+        if ($encryptedCode !== null) {
+            try {
+                $decryptedCode = Crypt::decryptString($encryptedCode);
+
+                if ($code === $decryptedCode) {
+                    return;
+                }
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                // Handle decryption failure (e.g., if the code has been tampered with)
+            }
         }
 
         throw new InvalidTwoFACodeException;
     }
 
-    public function isTwoFaVerfied(?string $session_id = null): bool
+    public function isTwoFaVerified(?string $session_id = null): bool
     {
         $session_id = $session_id ?? request()->session()->getId();
 
-        return $this->twoFaVerifis()->where('session_id', $session_id)->exists();
+        return $this->twoFaVerifications()->where('session_id', $session_id)->exists();
     }
 }

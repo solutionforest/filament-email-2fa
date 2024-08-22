@@ -16,7 +16,7 @@ class IsTwoFAVerified
 
         try {
             $routeName = $request->route()->getName();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $routeName = null;
         }
 
@@ -24,7 +24,7 @@ class IsTwoFAVerified
             return $next($request);
         }
 
-        if ($user instanceof RequireTwoFALogin && $user->isTwoFaVerfied($request->session()->getId())) {
+        if ($user instanceof RequireTwoFALogin && $user->isTwoFaVerified($request->session()->getId())) {
 
             return $next($request);
 
