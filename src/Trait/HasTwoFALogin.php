@@ -1,6 +1,6 @@
 <?php
 
-namespace Solutionforest\FilamentEmail2fa\Traits;
+namespace Solutionforest\FilamentEmail2fa\Trait;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Crypt;
