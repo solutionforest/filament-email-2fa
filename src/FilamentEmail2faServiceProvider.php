@@ -159,6 +159,8 @@ class FilamentEmail2faServiceProvider extends PackageServiceProvider
     {
         return [
             'create_filament-email-2fa_table',
+            'drop_filament_email_2fa_tables',
+            'update_code_in_filament-email-2fa_table'
         ];
     }
 }
