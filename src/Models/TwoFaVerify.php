@@ -18,8 +18,6 @@ class TwoFaVerify extends Model
 
     public function user()
     {
-        $morphName = config('filament-email-2fa.morph_name', 'user');
-
-        return $this->morphTo($morphName);
+        return $this->morphTo();
     }
 }
