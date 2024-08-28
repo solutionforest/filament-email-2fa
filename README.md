@@ -10,8 +10,10 @@
 
 This package seamlessly integrates two-factor authentication (2FA) into your Filament PHP applications using email verification codes. Enhance the security of your user accounts and protect sensitive data.
 
-![image](https://github.com/solutionforest/filament-email-2fa/assets/68211972/8fcefe16-c280-41f0-bc26-652f285b8975)
-
+<p align="start">
+  <img src="https://github.com/solutionforest/filament-email-2fa/assets/68211972/8fcefe16-c280-41f0-bc26-652f285b8975" alt="image" width="400"/>
+  <img src="https://github.com/user-attachments/assets/838c69ab-b7b6-4529-8956-594aced7b089" alt="Email OTP Popup" width="400"/>
+</p>
 
 ### Key Features:
 
