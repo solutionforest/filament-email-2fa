@@ -3,7 +3,6 @@
 namespace Solutionforest\FilamentEmail2fa;
 
 use Filament\Contracts\Plugin;
-use Filament\Pages\Page;
 use Filament\Panel;
 use Solutionforest\FilamentEmail2fa\Middlewares\IsTwoFAVerified;
 use Solutionforest\FilamentEmail2fa\Pages\LoginSuccessPage;
@@ -22,7 +21,7 @@ class FilamentEmail2faPlugin implements Plugin
     {
         $fapage = config('filament-email-2fa.2fa_page', TwoFactorAuth::class);
         $pages = [];
-        if($this->loginSuccessPage == null){
+        if ($this->loginSuccessPage == null) {
             $pages[] = config('filament-email-2fa.login_success_page', LoginSuccessPage::class);
         }
 

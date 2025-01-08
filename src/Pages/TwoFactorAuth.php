@@ -108,7 +108,7 @@ class TwoFactorAuth extends Page implements HasForms
 
                 return app(LoginSuccessResponse::class);
             } else {
-                throw new InvalidTwoFACodeException();
+                throw new InvalidTwoFACodeException;
             }
         } catch (InvalidTwoFACodeException $e) {
             $this->addError('data.2fa_code', $e->getMessage());
