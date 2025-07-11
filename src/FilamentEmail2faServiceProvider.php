@@ -90,7 +90,7 @@ class FilamentEmail2faServiceProvider extends PackageServiceProvider
         }
 
         // Testing
-        Testable::mixin(new TestsFilamentEmail2fa());
+        Testable::mixin(new TestsFilamentEmail2fa);
 
         $this->app->bind(LoginResponseContract::class, TwoFAResponse::class);
 
