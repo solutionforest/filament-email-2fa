@@ -3,7 +3,7 @@
 namespace Solutionforest\FilamentEmail2fa\Responses;
 
 use Filament\Facades\Filament;
-use Filament\Http\Responses\Auth\Contracts\LoginResponse as LoginResponseContract;
+use Filament\Auth\Http\Responses\Contracts\LoginResponse as LoginResponseContract;
 use Solutionforest\FilamentEmail2fa\Pages\TwoFactorAuth;
 
 class TwoFAResponse implements LoginResponseContract
@@ -18,7 +18,7 @@ class TwoFAResponse implements LoginResponseContract
     {
         // return whatever you want as url
 
-        if (Filament::getCurrentPanel()->hasPlugin('filament-email-2fa')) {
+        if (Filament::getPanel()->hasPlugin('filament-email-2fa')) {
             Filament::auth()->user()->send2FAEmail();
 
             return redirect()->intended(route(TwoFactorAuth::getRouteName()));

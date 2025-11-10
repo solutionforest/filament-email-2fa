@@ -9,6 +9,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
+use Filament\Panel;
 use Filament\Support\Enums\Alignment;
 use Illuminate\Contracts\Support\Htmlable;
 use Solutionforest\FilamentEmail2fa\Exceptions\InvalidTwoFACodeException;
@@ -26,7 +27,7 @@ class TwoFactorAuth extends Page implements HasForms
 
     protected static string $layout = 'filament-email-2fa::simple-layout';
 
-    protected static string $view = 'filament-email-2fa::email-sent';
+    protected string $view = 'filament-email-2fa::email-sent';
 
     public ?array $data = [];
 
@@ -37,7 +38,7 @@ class TwoFactorAuth extends Page implements HasForms
         return __('filament-email-2fa::filament-email-2fa.2sv');
     }
 
-    public static function getRelativeRouteName(): string
+    public static function getRelativeRouteName(Panel $panel): string
     {
         return 'sf-filament-2fa.2fa';
     }
@@ -63,7 +64,7 @@ class TwoFactorAuth extends Page implements HasForms
 
     public function logout()
     {
-        Filament::auth()->logout();
+        auth()->logout();
 
         session()->invalidate();
         session()->regenerateToken();
@@ -78,14 +79,13 @@ class TwoFactorAuth extends Page implements HasForms
         return [
             Action::make('save')
                 ->label(__('filament-email-2fa::filament-email-2fa.confirm'))
-                ->action('save')
+                ->submit('save')
                 ->keyBindings(['mod+s']),
 
             Action::make('resend')
                 ->color('gray')
                 ->label(__('filament-email-2fa::filament-email-2fa.resend_email'))
-                ->action('resend')
-                ->keyBindings(['mod+s']),
+                ->action('resend'),
 
             Action::make('logout')
                 ->color('gray')
@@ -129,7 +129,7 @@ class TwoFactorAuth extends Page implements HasForms
 
     public function getCurrentGuard()
     {
-        return Filament::getCurrentPanel()->getAuthGuard();
+        return Filament::getPanel()->getAuthGuard();
     }
 
     public function form(Form $form): Form

@@ -4,6 +4,7 @@ namespace Solutionforest\FilamentEmail2fa\Pages;
 
 use Filament\Forms\Form;
 use Filament\Pages\Page;
+use Filament\Panel;
 use Illuminate\Contracts\Support\Htmlable;
 
 /**
@@ -15,7 +16,7 @@ class LoginSuccessPage extends Page
 
     protected static string $layout = 'filament-email-2fa::simple-layout';
 
-    protected static string $view = 'filament-email-2fa::login-success';
+    protected string $view = 'filament-email-2fa::login-success';
 
     public ?array $data = [];
 
@@ -24,7 +25,7 @@ class LoginSuccessPage extends Page
         return __('filament-email-2fa::filament-email-2fa.login_success');
     }
 
-    public static function getRelativeRouteName(): string
+    public static function getRelativeRouteName(Panel $panel): string
     {
         return 'sf-filament-2fa.login-success';
     }

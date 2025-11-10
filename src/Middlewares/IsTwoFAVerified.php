@@ -3,6 +3,7 @@
 namespace Solutionforest\FilamentEmail2fa\Middlewares;
 
 use Closure;
+use Exception;
 use Filament\Facades\Filament;
 use Illuminate\Http\Request;
 use Solutionforest\FilamentEmail2fa\Interfaces\RequireTwoFALogin;
@@ -21,8 +22,8 @@ class IsTwoFAVerified
         }
 
         if ($user == null || $routeName == TwoFactorAuth::getRouteName()
-            || $routeName == Filament::getCurrentPanel()->generateRouteName('auth.email-verification.prompt')
-            || $routeName == Filament::getCurrentPanel()->generateRouteName('auth.logout')) {
+            || $routeName == Filament::getPanel()->generateRouteName('auth.email-verification.prompt')
+            || $routeName == Filament::getPanel()->generateRouteName('auth.logout')) {
             return $next($request);
         }
 
