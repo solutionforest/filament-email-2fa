@@ -1,17 +1,27 @@
-<x-filament::page.simple>
-    <x-filament::form wire:submit="save">
-        <span class="text-gray-500 text-sm">
-            @lang('filament-email-2fa::filament-email-2fa.email_sent', ['email' => $this->getUser()->email])
-        </span>
-        @if (session()->has('resent-success'))
-            <span class="alert text-green-500  text-sm">
-                {{ session('resent-success') }}
-            </span>
-        @endif
+<x-filament-panels::page.simple>
+    @php
+        $alignment = $this->getFormActionsAlignment();
+        $fullWidth = $this->hasFullWidthFormActions();
+    @endphp
+
+    <form wire:submit="save" class="space-y-6">
+        <div class="space-y-2">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+                @lang('filament-email-2fa::filament-email-2fa.email_sent', ['email' => $this->getUser()->email])
+            </p>
+            @if (session()->has('resent-success'))
+                <p class="text-sm text-success-600 dark:text-success-400">
+                    {{ session('resent-success') }}
+                </p>
+            @endif
+        </div>
 
         {{ $this->form }}
 
-        <x-filament::form.actions :actions="$this->getFormActions()" :full-width="$this->hasFullWidthFormActions()" />
-
-    </x-filament::form>
-</x-filament::page.simple>
+        <x-filament::actions
+            :actions="$this->getFormActions()"
+            :alignment="$alignment"
+            :full-width="$fullWidth"
+        />
+    </form>
+</x-filament-panels::page.simple>

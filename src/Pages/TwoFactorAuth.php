@@ -7,9 +7,9 @@ use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Filament\Panel;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\Alignment;
 use Illuminate\Contracts\Support\Htmlable;
 use Solutionforest\FilamentEmail2fa\Exceptions\InvalidTwoFACodeException;
@@ -17,7 +17,7 @@ use Solutionforest\FilamentEmail2fa\Interfaces\RequireTwoFALogin;
 use Solutionforest\FilamentEmail2fa\Responses\LoginSuccessResponse;
 
 /**
- * @property Form $form
+ * @property Schema $form
  */
 class TwoFactorAuth extends Page implements HasForms
 {
@@ -45,10 +45,10 @@ class TwoFactorAuth extends Page implements HasForms
 
     public function mount()
     {
-        if (! Filament::auth()->user() instanceof RequireTwoFALogin) {
+        if (! auth()->user() instanceof RequireTwoFALogin) {
             return redirect(Filament::getUrl());
         }
-        $this->email = Filament::auth()->user()->email;
+        $this->email = auth()->user()->email;
     }
 
     public function resend()
@@ -129,28 +129,16 @@ class TwoFactorAuth extends Page implements HasForms
 
     public function getCurrentGuard()
     {
-        return Filament::getPanel()->getAuthGuard();
+        return Filament::getCurrentPanel()->getAuthGuard();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $form): Schema
     {
-        return $form;
-    }
-
-    /**
-     * @return array<int | string, string | Form>
-     */
-    protected function getForms(): array
-    {
-        return [
-            'form' => $this->form(
-                $this->makeForm()
-                    ->schema([
-                        TextInput::make('2fa_code')->label(__('filament-email-2fa::filament-email-2fa.2fa-code')),
-                    ])
-                    ->statePath('data'),
-            ),
-        ];
+        return $form
+            ->schema([
+                TextInput::make('2fa_code')->label(__('filament-email-2fa::filament-email-2fa.2fa-code')),
+            ])
+            ->statePath('data');
     }
 
     public function hasFullWidthFormActions(): bool

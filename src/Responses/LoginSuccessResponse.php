@@ -15,7 +15,7 @@ class LoginSuccessResponse implements LoginResponseContract
      */
     public function toResponse($request)
     {
-        $page = Filament::getPanel()->getPlugin('filament-email-2fa')->getLoginSuccessPage();
+        $page = Filament::getCurrentPanel()->getPlugin('filament-email-2fa')->getLoginSuccessPage();
 
         return redirect()->intended(route($page::getRouteName()));
     }

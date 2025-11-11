@@ -2,13 +2,13 @@
 
 namespace Solutionforest\FilamentEmail2fa\Pages;
 
-use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Filament\Panel;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
 
 /**
- * @property Form $form
+ * @property Schema $form
  */
 class LoginSuccessPage extends Page
 {

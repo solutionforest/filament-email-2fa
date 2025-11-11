@@ -22,8 +22,8 @@ class IsTwoFAVerified
         }
 
         if ($user == null || $routeName == TwoFactorAuth::getRouteName()
-            || $routeName == Filament::getPanel()->generateRouteName('auth.email-verification.prompt')
-            || $routeName == Filament::getPanel()->generateRouteName('auth.logout')) {
+            || $routeName == Filament::getCurrentPanel()->generateRouteName('auth.email-verification.prompt')
+            || $routeName == Filament::getCurrentPanel()->generateRouteName('auth.logout')) {
             return $next($request);
         }
 

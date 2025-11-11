@@ -1,40 +1,39 @@
 @php
-    use Filament\Support\Enums\MaxWidth;
+    use Filament\Support\Enums\Width;
+
+    $livewire ??= null;
+
+    $renderHookScopes = $livewire?->getRenderHookScopes();
+    $maxContentWidth ??= Width::Large;
+
+    if (is_string($maxContentWidth)) {
+        $maxContentWidth = Width::tryFrom($maxContentWidth) ?? $maxContentWidth;
+    }
 @endphp
 
-<x-filament::layouts.base :livewire="$livewire">
+<x-filament-panels::layout.base :livewire="$livewire">
     @props([
         'after' => null,
         'heading' => null,
         'subheading' => null,
     ])
 
-    <div class="fi-simple-layout flex min-h-screen flex-col items-center">
-        <div
-            class="fi-simple-main-ctn flex w-full flex-grow items-center justify-center"
-        >
+    <div class="fi-simple-layout">
+        {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::SIMPLE_LAYOUT_START, scopes: $renderHookScopes) }}
+
+        <div class="fi-simple-main-ctn">
             <main
                 @class([
-                    'fi-simple-main my-16 w-full bg-white px-6 py-12 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10 sm:rounded-xl sm:px-12',
-                    match ($maxWidth ?? null) {
-                        MaxWidth::ExtraSmall, 'xs' => 'sm:max-w-xs',
-                        MaxWidth::Small, 'sm' => 'sm:max-w-sm',
-                        MaxWidth::Medium, 'md' => 'sm:max-w-md',
-                        MaxWidth::ExtraLarge, 'xl' => 'sm:max-w-xl',
-                        MaxWidth::TwoExtraLarge, '2xl' => 'sm:max-w-2xl',
-                        MaxWidth::ThreeExtraLarge, '3xl' => 'sm:max-w-3xl',
-                        MaxWidth::FourExtraLarge, '4xl' => 'sm:max-w-4xl',
-                        MaxWidth::FiveExtraLarge, '5xl' => 'sm:max-w-5xl',
-                        MaxWidth::SixExtraLarge, '6xl' => 'sm:max-w-6xl',
-                        MaxWidth::SevenExtraLarge, '7xl' => 'sm:max-w-7xl',
-                        default => 'sm:max-w-lg',
-                    },
+                    'fi-simple-main',
+                    ($maxContentWidth instanceof Width) ? "fi-width-{$maxContentWidth->value}" : $maxContentWidth,
                 ])
             >
                 {{ $slot }}
             </main>
         </div>
 
-        {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::FOOTER, scopes: $livewire->getRenderHookScopes()) }}
+        {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::FOOTER, scopes: $renderHookScopes) }}
+
+        {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::SIMPLE_LAYOUT_END, scopes: $renderHookScopes) }}
     </div>
-</x-filament::layouts.base>
+</x-filament-panels::layout.base>
