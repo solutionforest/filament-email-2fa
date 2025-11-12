@@ -119,7 +119,6 @@ class TwoFactorAuth extends Page implements HasForms
 
     public function getUser()
     {
-        $guard = $this->getCurrentGuard();
         $model = config("filament-email-2fa.auth_model");
 
         $user = $model::where('email', $this->email)->first();
