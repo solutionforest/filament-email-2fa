@@ -61,6 +61,12 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="filament-email-2fa-views"
 ```
 
+Optionally, you can publish the translations using
+
+```bash
+php artisan vendor:publish --tag="filament-email-2fa-translation"
+```
+
 This is the contents of the published config file:
 
 ```php
@@ -75,10 +81,7 @@ return [
 
     // How long (in minutes) a 2FA code remains valid
     'expiry_time_by_mins' => 10,
-
-    // The authenticatable model used in your application
-    'auth_model' => env('AUTH_MODEL', App\Models\User::class),
-
+    
     // Pages used for the 2FA flow (can be overridden with custom pages)
     '2fa_page' => \Solutionforest\FilamentEmail2fa\Pages\TwoFactorAuth::class,
     'login_success_page' => \Solutionforest\FilamentEmail2fa\Pages\LoginSuccessPage::class,
