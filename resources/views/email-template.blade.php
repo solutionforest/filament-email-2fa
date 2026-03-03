@@ -1,4 +1,4 @@
-<p>Hi {{ $name }},</p>
+<p>@lang('filament-email-2fa::filament-email-2fa.email_greeting', ['name' => $name])</p>
 <p>
-    Your 2-fa code is : {{ $code }}
+    @lang('filament-email-2fa::filament-email-2fa.email_code_message') {{ $code }}
 </p>

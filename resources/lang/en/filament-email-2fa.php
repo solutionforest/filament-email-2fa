@@ -3,7 +3,7 @@
 // translations for Solutionforest/FilamentEmail2fa
 return [
     'login_success' => 'Login Success',
-    'email_sent' => 'A email has been sent to :email, please follow the instruction of the email',
+    'email_sent' => 'An email has been sent to :email, please follow the instructions in the email',
     '2sv' => '2-Step Verification',
     'continue' => 'Continue',
     'confirm' => 'Confirm',
@@ -12,4 +12,8 @@ return [
     '2fa-code' => '2-FA Code',
     'resend_success' => 'Resend Success',
     'use_another_ac' => 'Use Another Account',
+
+    // Email template
+    'email_greeting' => 'Hi :name,',
+    'email_code_message' => 'Your 2-FA code is:',
 ];

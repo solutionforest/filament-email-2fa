@@ -101,3 +101,58 @@ class FilamentUser extends Authenticatable implements FilamentUserContract,Requi
 }
 ```
 
+## Translations / Multilingual Support
+
+This package includes translations for the following languages:
+
+| Language | Locale |
+|----------|--------|
+| English | `en` |
+| Spanish | `es` |
+| French | `fr` |
+| German | `de` |
+| Italian | `it` |
+| Dutch | `nl` |
+| Portuguese (Brazil) | `pt_BR` |
+| Arabic | `ar` |
+| Chinese (Simplified) | `zh_CN` |
+| Chinese (Traditional) | `zh_TW` |
+| Japanese | `ja` |
+| Korean | `ko` |
+| Russian | `ru` |
+
+### Publishing Translations
+
+To customize the translations, publish them to your application:
+
+```bash
+php artisan vendor:publish --tag="filament-email-2fa-translation"
+```
+
+This will copy the translation files to `lang/vendor/filament-email-2fa/`.
+
+### Adding New Languages
+
+To add a new language, create a new file at `lang/vendor/filament-email-2fa/{locale}/filament-email-2fa.php` with all the translation keys:
+
+```php
+<?php
+
+return [
+    'login_success' => 'Your translation',
+    'email_sent' => 'Your translation with :email placeholder',
+    '2sv' => '2-Step Verification',
+    'continue' => 'Continue',
+    'confirm' => 'Confirm',
+    'resend_email' => 'Resend Email',
+    'invalid_code' => 'Invalid 2-FA code',
+    '2fa-code' => '2-FA Code',
+    'resend_success' => 'Resend Success',
+    'use_another_ac' => 'Use Another Account',
+    'email_greeting' => 'Hi :name,',
+    'email_code_message' => 'Your 2-FA code is:',
+];
+```
+
+The package will automatically use the translation matching your application's locale (`config/app.php` → `locale`).
+
