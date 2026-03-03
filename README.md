@@ -65,14 +65,21 @@ This is the contents of the published config file:
 
 ```php
 return [
+    // Database tables used to store 2FA codes and verified sessions
     'code_table' => 'filament_email_2fa_codes',
     'verify_table' => 'filament_email_2fa_verify',
 
+    // Models used for 2FA codes and verified sessions (can be overridden)
     'code_model' => \Solutionforest\FilamentEmail2fa\Models\TwoFaCode::class,
     'verify_model' => \Solutionforest\FilamentEmail2fa\Models\TwoFaVerify::class,
 
+    // How long (in minutes) a 2FA code remains valid
     'expiry_time_by_mins' => 10,
 
+    // The authenticatable model used in your application
+    'auth_model' => env('AUTH_MODEL', App\Models\User::class),
+
+    // Pages used for the 2FA flow (can be overridden with custom pages)
     '2fa_page' => \Solutionforest\FilamentEmail2fa\Pages\TwoFactorAuth::class,
     'login_success_page' => \Solutionforest\FilamentEmail2fa\Pages\LoginSuccessPage::class,
 ];
@@ -131,6 +138,23 @@ php artisan vendor:publish --tag="filament-email-2fa-translation"
 
 This will copy the translation files to `lang/vendor/filament-email-2fa/`.
 
+### Available Translation Keys
+
+| Key | Description |
+|-----|-------------|
+| `login_success` | Heading shown on the login success page |
+| `email_sent` | Message shown after the code email is sent (`:email` placeholder) |
+| `2sv` | Page/email subject title for 2-Step Verification |
+| `continue` | Label for the "Continue" button on the success page |
+| `confirm` | Label for the form submission button |
+| `resend_email` | Label for the resend code button |
+| `invalid_code` | Error message shown when an invalid code is submitted |
+| `2fa-code` | Label for the code input field |
+| `resend_success` | Flash message shown after a code is resent |
+| `use_another_ac` | Label for the "Use Another Account" button |
+| `email_greeting` | Greeting line in the 2FA email (`:name` placeholder) |
+| `email_code_message` | Label line preceding the code in the 2FA email |
+
 ### Adding New Languages
 
 To add a new language, create a new file at `lang/vendor/filament-email-2fa/{locale}/filament-email-2fa.php` with all the translation keys:
@@ -141,16 +165,16 @@ To add a new language, create a new file at `lang/vendor/filament-email-2fa/{loc
 return [
     'login_success' => 'Your translation',
     'email_sent' => 'Your translation with :email placeholder',
-    '2sv' => '2-Step Verification',
-    'continue' => 'Continue',
-    'confirm' => 'Confirm',
-    'resend_email' => 'Resend Email',
-    'invalid_code' => 'Invalid 2-FA code',
-    '2fa-code' => '2-FA Code',
-    'resend_success' => 'Resend Success',
-    'use_another_ac' => 'Use Another Account',
-    'email_greeting' => 'Hi :name,',
-    'email_code_message' => 'Your 2-FA code is:',
+    '2sv' => 'Your translation',
+    'continue' => 'Your translation',
+    'confirm' => 'Your translation',
+    'resend_email' => 'Your translation',
+    'invalid_code' => 'Your translation',
+    '2fa-code' => 'Your translation',
+    'resend_success' => 'Your translation',
+    'use_another_ac' => 'Your translation',
+    'email_greeting' => 'Your translation with :name placeholder',
+    'email_code_message' => 'Your translation',
 ];
 ```
 
