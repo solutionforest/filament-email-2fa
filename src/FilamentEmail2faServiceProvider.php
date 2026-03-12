@@ -2,7 +2,7 @@
 
 namespace Solutionforest\FilamentEmail2fa;
 
-use Filament\Http\Responses\Auth\Contracts\LoginResponse as LoginResponseContract;
+use Filament\Auth\Http\Responses\Contracts\LoginResponse;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
@@ -92,7 +92,7 @@ class FilamentEmail2faServiceProvider extends PackageServiceProvider
         // Testing
         Testable::mixin(new TestsFilamentEmail2fa);
 
-        $this->app->bind(LoginResponseContract::class, TwoFAResponse::class);
+        $this->app->bind(LoginResponse::class, TwoFAResponse::class);
 
         $this->publishes([
             __DIR__ . '/../resources/lang' => lang_path('vendor/filament-email-2fa'),
