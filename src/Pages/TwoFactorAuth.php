@@ -49,6 +49,10 @@ class TwoFactorAuth extends Page implements HasForms
             return redirect(Filament::getUrl());
         }
         $this->email = auth()->user()->email;
+        $this->email = auth()->user()->email;
+        if (!$this->getUser()->latest_2fa_code()->exists()) {
+            $this->getUser()->send2FAEmail();
+        }
     }
 
     public function resend()
