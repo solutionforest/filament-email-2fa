@@ -50,7 +50,7 @@ class TwoFactorAuth extends Page implements HasForms
         }
         $this->email = auth()->user()->email;
         $this->email = auth()->user()->email;
-        if (!$this->getUser()->latest_2fa_code()->exists()) {
+        if (! $this->getUser()->latest_2fa_code()->exists()) {
             $this->getUser()->send2FAEmail();
         }
     }
