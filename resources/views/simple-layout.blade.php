@@ -4,7 +4,7 @@
     $livewire ??= null;
 
     $renderHookScopes = $livewire?->getRenderHookScopes();
-    $maxContentWidth ??= Width::Large;
+    $maxContentWidth ??= (filament()->getSimplePageMaxContentWidth() ?? Width::Large);
 
     if (is_string($maxContentWidth)) {
         $maxContentWidth = Width::tryFrom($maxContentWidth) ?? $maxContentWidth;
@@ -20,6 +20,21 @@
 
     <div class="fi-simple-layout">
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::SIMPLE_LAYOUT_START, scopes: $renderHookScopes) }}
+
+        @if (($hasTopbar ?? true) && filament()->auth()->check())
+            <div class="fi-simple-layout-header">
+                @if (filament()->hasDatabaseNotifications())
+                    @livewire(filament()->getDatabaseNotificationsLivewireComponent(), [
+                        'lazy' => filament()->hasLazyLoadedDatabaseNotifications(),
+                        'position' => \Filament\Enums\DatabaseNotificationsPosition::Topbar,
+                    ])
+                @endif
+
+                @if (filament()->hasUserMenu())
+                    @livewire(Filament\Livewire\SimpleUserMenu::class)
+                @endif
+            </div>
+        @endif
 
         <div class="fi-simple-main-ctn">
             <main
