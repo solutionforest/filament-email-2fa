@@ -98,7 +98,7 @@ class TwoFactorAuth extends Page implements HasForms
             Action::make('logout')
                 ->color('gray')
                 ->label(__('filament-email-2fa::filament-email-2fa.use_another_ac'))
-                ->url(fn(): string => static::getUrl(['logout' => 1])),
+                ->url(fn (): string => static::getUrl(['logout' => 1])),
         ];
     }
 
