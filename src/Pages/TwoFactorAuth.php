@@ -45,6 +45,10 @@ class TwoFactorAuth extends Page implements HasForms
 
     public function mount()
     {
+        if (request()->boolean('logout')) {
+            return $this->logout();
+        }
+
         if (! auth()->user() instanceof RequireTwoFALogin) {
             return redirect(Filament::getUrl());
         }
@@ -94,7 +98,7 @@ class TwoFactorAuth extends Page implements HasForms
             Action::make('logout')
                 ->color('gray')
                 ->label(__('filament-email-2fa::filament-email-2fa.use_another_ac'))
-                ->action('logout'),
+                ->url(fn(): string => static::getUrl(['logout' => 1])),
         ];
     }
 
